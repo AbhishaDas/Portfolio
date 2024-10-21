@@ -1,12 +1,23 @@
 import React from 'react';
-import { BsGithub, BsInfoCircle } from "react-icons/bs"; // Import the new info icon
+import { BsGithub, BsInfoCircle } from "react-icons/bs";
+import { useNavigate } from 'react-router-dom';
 
-const ProjectsCard = ({ title, des, src, githubLink, projectLink }) => {
+const ProjectsCard = ({ id, title, des, src, githubLink }) => {
+  const navigate = useNavigate();
+
+  // Function to handle navigation to the project detail view
+  const handleNavigate = () => {
+    navigate(`/projects/${id}`);
+  };
+
   return (
-    <div className="w-full p-4 xl:px-12 h-auto xl:py-10 rounded-lg shadow-shadowOne flex flex-col bg-gradient-to-r from-bodyColor to-[#202327] group hover:bg-gradient-to-b hover:from-gray-900 hover:gray-900 transition-colors duration-1000">
+    <div 
+      onClick={handleNavigate}
+      className="w-full p-4 xl:px-12 h-auto xl:py-10 rounded-lg shadow-shadowOne flex flex-col bg-gradient-to-r from-bodyColor to-[#202327] group hover:bg-gradient-to-b hover:from-gray-900 hover:gray-900 transition-colors duration-1000 cursor-pointer"
+    >
       <div className="w-full h-[80%] overflow-hidden rounded-lg">
         <img
-          className="w-full h-60 object-cover group-hover:scale-110 duration-300 cursor-pointer"
+          className="w-full h-60 object-cover group-hover:scale-110 duration-300"
           src={src}
           alt={title}
         />
@@ -23,18 +34,10 @@ const ProjectsCard = ({ title, des, src, githubLink, projectLink }) => {
                 href={githubLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-lg w-10 h-10 rounded-full bg-black inline-flex justify-center items-center text-gray-400 hover:text-designColor duration-300 cursor-pointer"
+                className="text-lg w-10 h-10 rounded-full bg-black inline-flex justify-center items-center text-gray-400 hover:text-designColor duration-300"
+                onClick={(e) => e.stopPropagation()} // Prevent navigation on icon click
               >
                 <BsGithub />
-              </a>
-              {/* Project Info Link */}
-              <a
-                href={projectLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-lg w-10 h-10 rounded-full bg-black inline-flex justify-center items-center text-gray-400 hover:text-designColor duration-300 cursor-pointer"
-              >
-                <BsInfoCircle /> {/* Replaced with info icon */}
               </a>
             </div>
           </div>
@@ -45,6 +48,6 @@ const ProjectsCard = ({ title, des, src, githubLink, projectLink }) => {
       </div>
     </div>
   );
-}
+};
 
 export default ProjectsCard;
